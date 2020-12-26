@@ -1,4 +1,4 @@
-import './styles.css';
+import './styles/styles.scss';
 import fetchCountries from './js/fetchCountries';
 import refs from './js/refs';
 import countries from './templates/countries.hbs';
