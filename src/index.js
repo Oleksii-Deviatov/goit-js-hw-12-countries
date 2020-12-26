@@ -19,17 +19,25 @@ function inputHeandler(value) {
     refs.container.innerHTML = '';
     return;
   }
-  fetchCountries(value).then(data => render(data));
+  fetchCountries(value)
+    .then(data => render(data))
+    .catch(err => warning(err));
 }
 
 function render(data) {
   refs.container.innerHTML = '';
   if (data.length === 1) {
     refs.container.insertAdjacentHTML('afterbegin', country(data));
+    toastr.clear();
   } else if (data.length > 10) {
-    toastr.warning('Too many results. Please specify your query');
-    toastr.options = toastrOptions;
+    warning('Too many results. Please specify your query');
   } else {
     refs.container.insertAdjacentHTML('afterbegin', countries(data));
+    toastr.clear();
   }
+}
+
+function warning(message) {
+  toastr.warning(message);
+  toastr.options = toastrOptions;
 }
