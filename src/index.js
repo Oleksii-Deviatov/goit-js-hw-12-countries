@@ -16,16 +16,19 @@ refs.input.addEventListener(
 
 function inputHeandler(value) {
   if (value.length < 1) {
-    refs.container.innerHTML = '';
+    clearUI();
     return;
   }
   fetchCountries(value)
     .then(data => render(data))
-    .catch(err => warning(err));
+    .catch(err => {
+      warning(err);
+      clearUI();
+    });
 }
 
 function render(data) {
-  refs.container.innerHTML = '';
+  clearUI();
   if (data.length === 1) {
     refs.container.insertAdjacentHTML('afterbegin', country(data));
     toastr.clear();
@@ -40,4 +43,8 @@ function render(data) {
 function warning(message) {
   toastr.warning(message);
   toastr.options = toastrOptions;
+}
+
+function clearUI() {
+  refs.container.innerHTML = '';
 }
