@@ -1,8 +1,8 @@
 import './styles/styles.scss';
 import fetchCountries from './js/fetchCountries';
 import refs from './js/refs';
-import countries from './templates/countries.hbs';
-import country from './templates/country.hbs';
+import multiplyRender from './templates/multiplyRender.hbs';
+import singleRender from './templates/singleRender.hbs';
 import debounce from 'lodash.debounce';
 import toastr from 'toastr';
 import toastrOptions from './js/toaster/options';
@@ -14,12 +14,12 @@ refs.input.addEventListener(
   }, 500),
 );
 
-function inputHeandler(value) {
-  if (value.length < 1) {
+function inputHeandler(inputValue) {
+  if (inputValue.length < 1) {
     clearUI();
     return;
   }
-  fetchCountries(value)
+  fetchCountries(inputValue)
     .then(data => render(data))
     .catch(err => {
       warning(err);
@@ -30,12 +30,12 @@ function inputHeandler(value) {
 function render(data) {
   clearUI();
   if (data.length === 1) {
-    refs.container.insertAdjacentHTML('afterbegin', country(data));
+    refs.container.insertAdjacentHTML('afterbegin', singleRender(data));
     toastr.clear();
   } else if (data.length > 10) {
     warning('Too many results. Please specify your query');
   } else {
-    refs.container.insertAdjacentHTML('afterbegin', countries(data));
+    refs.container.insertAdjacentHTML('afterbegin', multiplyRender(data));
     toastr.clear();
   }
 }
