@@ -32,11 +32,13 @@ function render(data) {
   if (data.length === 1) {
     refs.container.insertAdjacentHTML('afterbegin', singleRender(data));
     toastr.clear();
+    refs.container.classList.add('countries');
   } else if (data.length > 10) {
     warning('Too many results. Please specify your query');
   } else {
     refs.container.insertAdjacentHTML('afterbegin', multiplyRender(data));
     toastr.clear();
+    refs.container.classList.add('countries');
   }
 }
 
@@ -47,4 +49,5 @@ function warning(message) {
 
 function clearUI() {
   refs.container.innerHTML = '';
+  refs.container.classList.remove('countries');
 }
